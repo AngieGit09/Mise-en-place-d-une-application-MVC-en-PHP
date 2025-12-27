@@ -14,12 +14,9 @@
                 <div class="card-body">
                     <h4 class="mb-3 text-center">Connexion</h4>
 
-                    <?php
-                    session_start();
-                    if (!empty($_SESSION['error'])) :
-                    ?>
+                    <?php if (!empty($_SESSION['error'])): ?>
                         <div class="alert alert-danger">
-                            <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                            <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
                         </div>
                     <?php endif; ?>
 

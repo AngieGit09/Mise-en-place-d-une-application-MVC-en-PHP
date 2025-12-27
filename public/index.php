@@ -1,5 +1,8 @@
 <?php
 
+//  Session démarrée une seule fois
+session_start();
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -28,7 +31,7 @@ $router = new Router([
     'paths' => [
         'controllers' => __DIR__ . '/../app/Controllers',
     ],
-    'base_folder' => '/monprojet/public', // ⚠️ adapte à ton dossier réel
+    'base_folder' => '',
     'debug' => true
 ]);
 
@@ -47,7 +50,7 @@ $router->get('/trajet/create', ['TrajetController', 'createForm']);
 $router->post('/trajet/create', ['TrajetController', 'create']);
 
 $router->get('/trajet/:id/edit', ['TrajetController', 'editForm']);
-$router->post('/trajet/:id/edit', ['TrajetController', 'update']);
+$router->post('/trajet/:id/update', ['TrajetController', 'update']);
 $router->get('/trajet/:id/delete', ['TrajetController', 'delete']);
 
 /* ========= RUN ========= */

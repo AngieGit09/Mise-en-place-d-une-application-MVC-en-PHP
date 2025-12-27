@@ -2,9 +2,6 @@
 
 class Trajet
 {
-    /**
-     * Récupère tous les trajets disponibles avec toutes les infos
-     */
     public static function getDisponibles()
     {
         $pdo = getPDO();
@@ -16,7 +13,6 @@ class Trajet
                     e.telephone as telephone,
                     e.email as email,
                     a.ville as agence_ville
-                    
                 FROM trajets t
                 LEFT JOIN employes e ON t.employe_id = e.id
                 LEFT JOIN agences a ON t.agence_id = a.id
@@ -26,9 +22,6 @@ class Trajet
         return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Trouve un trajet par son ID
-     */
     public static function find($id)
     {
         $pdo = getPDO();
@@ -37,9 +30,6 @@ class Trajet
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Crée un nouveau trajet
-     */
     public static function create($data)
     {
         $pdo = getPDO();
@@ -51,9 +41,6 @@ class Trajet
         return $stmt->execute($data);
     }
 
-    /**
-     * Met à jour un trajet existant
-     */
     public static function update($id, $data)
     {
         $pdo = getPDO();
@@ -70,9 +57,6 @@ class Trajet
         return $stmt->execute($data);
     }
 
-    /**
-     * Supprime un trajet
-     */
     public static function delete($id)
     {
         $pdo = getPDO();

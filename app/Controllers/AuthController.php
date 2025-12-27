@@ -7,42 +7,33 @@ class AuthController
         require __DIR__ . '/../Views/login.php';
     }
 
-   public function login()
-{
-    session_start();
+    public function login()
+    {
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
 
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
+        $employe = Employe::findByEmail($email);
 
-    
+        if ($employe && password_verify($password, $employe['password'])) {
+            $_SESSION['user'] = [
+                'id' => $employe['id'],
+                'prenom' => $employe['prenom'],
+                'nom' => $employe['nom'],
+                'email' => $employe['email'],
+                'role' => $employe['role'] ?? 'employe'
+            ];
 
-$employe = Employe::findByEmail($email);
+            header('Location: /');
+            exit;
+        }
 
-
-    // ✅ BONNE vérification
-    if ($employe && password_verify($password, $employe['password'])) {
-
-        // On stocke uniquement ce qui est utile en session
-       $_SESSION['user'] = [
-    'id' => $employe['id'],
-    'prenom' => $employe['prenom'],
-    'nom' => $employe['nom'],
-    'email' => $employe['email'],
-    'role' => $employe['role'] ?? 'employe'
-];
-
-        header('Location: /');
+        $_SESSION['error'] = "Identifiants incorrects";
+        header('Location: /login');
         exit;
     }
 
-    $_SESSION['error'] = "Identifiants incorrects";
-    header('Location: /login');
-    exit;
-}
-
     public function logout()
     {
-        session_start();
         session_destroy();
         header('Location: /login');
         exit;
